@@ -7,11 +7,11 @@ const __dirname = dirname(__filename);
 var filepath = path.join(__dirname, "..", "jsondatastore/blogpost.json");
 
 export const getAllBlogPost = (req, res) => {
-  console.log(__dirname);
   fs.readFile(filepath, "utf8", function (err, data) {
-    if (err) {
-      res.send("No Blog Post");
+    if (data.length == 0) {
+      res.json({ message: "No Posts Found" });
     }
+
     const jsonData = JSON.parse(data);
     res.json(jsonData);
   });
@@ -19,10 +19,18 @@ export const getAllBlogPost = (req, res) => {
 
 export const getById = (req, res) => {
   fs.readFile(filepath, function (err, data) {
-    var users = JSON.parse(data);
-    var user = users["user" + req.params.id];
-    console.log(user);
-    res.json(user);
+    if (data.length == 0) {
+      res.json({ message: "No Posts Found" });
+    }
+    var blogposts = JSON.parse(data);
+    var blogpost = blogposts[req.params.id];
+    if (data.length == 0 || blogpost == undefined) {
+      res.json({
+        message: "BlogPost for given id " + req.params.id + " Not Found",
+      });
+    }
+
+    res.json(blogpost);
   });
 };
 
