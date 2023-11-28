@@ -1,6 +1,7 @@
 export class BlogPost {
-  constructor(title, content, author, timestamp) {
+  constructor(id, title, content, author, timestamp) {
     this.title = title;
+    this.id = id;
     this.content = content;
     this.author = author;
     this.timestamp = timestamp;

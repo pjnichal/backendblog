@@ -34,34 +34,65 @@ export const getById = (req, res) => {
   });
 };
 
-export const saveBlogPost = (blogpost, res) => {
+export const saveBlogPost = (req, res) => {
   fs.readFile(filepath, function (err, data) {
-    data = JSON.parse(data);
+    var jsonData = {};
+    if (data.length == 0) {
+      const key = res.locals.blogpost.id;
+      const value = res.locals.blogpost;
+      jsonData[key] = value;
+      console.log(jsonData);
+    } else {
+      jsonData = JSON.parse(data);
 
-    data[blogpost] = blogpost;
-    console.log(data);
-    fs.writeFile(filepath, JSON.stringify(data), (err) => {});
-    console.log("here");
-    res.json(data);
+      jsonData[res.locals.blogpost.id] = res.locals.blogpost;
+      console.log(jsonData);
+
+      console.log("here");
+    }
+    fs.writeFile(filepath, JSON.stringify(jsonData), (err) => {});
+
+    res.json(jsonData);
   });
 };
-export const updateBlogPost = (blogpost, res) => {
+export const updateBlogPost = (req, res) => {
   fs.readFile(filepath, function (err, data) {
+    if (data.length == 0) {
+      res.json({ message: "No Posts Found" });
+    }
     data = JSON.parse(data);
-
-    data[blogpost.id] = blogpost;
-    console.log(data);
-    fs.writeFile(filepath, JSON.stringify(data), (err) => {
-      console.log("here");
-      res.json(data);
-    });
+    var blogpost = data[res.locals.blogpost.id];
+    if (blogpost == undefined) {
+      res.json({
+        message:
+          "BlogPost for given id " + res.locals.blogpost.id + " Not Found",
+      });
+    } else {
+      data[res.locals.blogpost.id] = res.locals.blogpost;
+      console.log(data);
+      fs.writeFile(filepath, JSON.stringify(data), (err) => {
+        console.log("here");
+        res.json(data);
+      });
+    }
   });
 };
 
 export const deleteBlogPost = (req, res) => {
   fs.readFile(filepath, function (err, data) {
+    if (data.length == 0) {
+      res.json({ message: "No Posts Found" });
+    }
+
     data = JSON.parse(data);
-    delete data["user" + req.params.id];
+    var blogpost = data[req.params.id];
+
+    if (blogpost == undefined) {
+      res.json({
+        message: "BlogPost for given id " + req.params.id + " Not Found",
+      });
+    }
+    delete data[blogpost.id];
 
     console.log(data);
     fs.writeFile(filepath, JSON.stringify(data), (err) => {});
