@@ -8,8 +8,7 @@ var filepath = path.join(__dirname, "..", "jsondatastore/blogpost.json");
 
 export const getAllBlogPost = (req, res) => {
   fs.readFile(filepath, "utf8", function (err, data) {
-    console.log(err);
-    if (data.length == 0) {
+    if (err && err.code == "ENOENT") {
       res.json({ message: "No Posts Found" });
     } else {
       const jsonData = JSON.parse(data);
@@ -20,7 +19,7 @@ export const getAllBlogPost = (req, res) => {
 
 export const getById = (req, res) => {
   fs.readFile(filepath, function (err, data) {
-    if (data.length == 0) {
+    if (err && err.code == "ENOENT") {
       res.json({ message: "No Posts Found" });
     }
     var blogposts = JSON.parse(data);
@@ -37,32 +36,29 @@ export const getById = (req, res) => {
 
 export const saveBlogPost = (req, res) => {
   var jsonData = {};
-  fs.readFile(filepath, function (err, data) {
-    if (data.length == 0) {
+
+  fs.readFile(filepath, (err, data) => {
+    var jsonData = {};
+    if (err && err.code == "ENOENT") {
       const key = res.locals.blogpost.id;
       const value = res.locals.blogpost;
-      jsonData[key] = value;
-      console.log(jsonData);
+      jsonData[key] = value.value;
     } else {
       jsonData = JSON.parse(data);
 
       jsonData[res.locals.blogpost.id] = res.locals.blogpost;
-      console.log(jsonData);
 
       console.log("here");
     }
-    fs.writeFile(filepath, JSON.stringify(jsonData), (err) => {
-      if (err) {
-        res.send({ message: err.message });
-      }
-    });
+    console.log(JSON.stringify(jsonData));
+    fs.writeFileSync(filepath, JSON.stringify(jsonData), (err) => {});
 
     res.json(res.locals.blogpost);
   });
 };
 export const updateBlogPost = (req, res) => {
   fs.readFile(filepath, function (err, data) {
-    if (data.length == 0) {
+    if (err.code == "ENOENT") {
       res.json({ message: "No Posts Found" });
     }
     data = JSON.parse(data);
@@ -85,22 +81,28 @@ export const updateBlogPost = (req, res) => {
 
 export const deleteBlogPost = (req, res) => {
   fs.readFile(filepath, function (err, data) {
-    if (data.length == 0) {
+    if (err && err.code == "ENOENT") {
       res.json({ message: "No Posts Found" });
     }
 
     data = JSON.parse(data);
     var blogpost = data[req.params.id];
-
+    console.log(blogpost);
     if (blogpost == undefined) {
       res.json({
         message: "BlogPost for given id " + req.params.id + " Not Found",
       });
-    }
-    delete data[blogpost.id];
+    } else {
+      delete data[blogpost.id];
+      if (data.length == 0) {
+        console.log("here");
+        fs.unlinkSync(filepath);
+      } else {
+        console.log(data);
+        fs.writeFile(filepath, JSON.stringify(data), (err) => {});
+      }
 
-    console.log(data);
-    fs.writeFile(filepath, JSON.stringify(data), (err) => {});
-    res.json(data);
+      res.json(res.locals.blogpost);
+    }
   });
 };
