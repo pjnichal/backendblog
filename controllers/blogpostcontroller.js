@@ -128,7 +128,7 @@ export const deleteBlogPost = (req, res) => {
     return res.status(201).json({
       status: 201,
       message: "BlogPost" + req.params.id + "is Deleted Successfully",
-      data: {},
+      data: blogpost,
     });
   });
 };
