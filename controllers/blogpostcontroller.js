@@ -8,6 +8,7 @@ var filepath = path.join(__dirname, "..", "jsondatastore/blogpost.json");
 
 export const getAllBlogPost = (req, res) => {
   fs.readFile(filepath, "utf8", function (err, data) {
+    console.log(err);
     if (data.length == 0) {
       res.json({ message: "No Posts Found" });
     } else {
