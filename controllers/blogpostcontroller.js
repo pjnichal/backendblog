@@ -33,12 +33,12 @@ export const getById = (req, res) => {
 };
 
 export const saveBlogPost = (req, res) => {
-  var jsonData = {};
   fs.readFile(filepath, (err, data) => {
+    var jsonData = {};
     if (err && err.code == "ENOENT") {
       const key = res.locals.blogpost.id;
       const value = res.locals.blogpost;
-      jsonData[key] = value.value;
+      jsonData[key] = value;
     } else {
       jsonData = JSON.parse(data);
       jsonData[res.locals.blogpost.id] = res.locals.blogpost;
@@ -75,7 +75,7 @@ export const updateBlogPost = (req, res) => {
 export const deleteBlogPost = (req, res) => {
   fs.readFile(filepath, function (err, data) {
     if (err && err.code == "ENOENT") {
-      return res.end.json({ message: "No Posts Found" });
+      return res.json({ message: "No Posts Found" });
     }
 
     data = JSON.parse(data);
