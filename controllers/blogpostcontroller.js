@@ -72,7 +72,7 @@ export const saveBlogPost = (req, res) => {
 export const updateBlogPost = (req, res) => {
   fs.readFile(filepath, function (err, data) {
     if (err && err.code == "ENOENT") {
-      res.status(404).json({
+      return res.status(404).json({
         status: 404,
         message: "BlogPost for given id " + req.params.id + " Not Found",
         data: {},
