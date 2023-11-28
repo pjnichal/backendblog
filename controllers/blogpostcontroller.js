@@ -10,10 +10,10 @@ export const getAllBlogPost = (req, res) => {
   fs.readFile(filepath, "utf8", function (err, data) {
     if (data.length == 0) {
       res.json({ message: "No Posts Found" });
+    } else {
+      const jsonData = JSON.parse(data);
+      res.json(jsonData);
     }
-
-    const jsonData = JSON.parse(data);
-    res.json(jsonData);
   });
 };
 
@@ -35,8 +35,8 @@ export const getById = (req, res) => {
 };
 
 export const saveBlogPost = (req, res) => {
+  var jsonData = {};
   fs.readFile(filepath, function (err, data) {
-    var jsonData = {};
     if (data.length == 0) {
       const key = res.locals.blogpost.id;
       const value = res.locals.blogpost;
@@ -50,9 +50,13 @@ export const saveBlogPost = (req, res) => {
 
       console.log("here");
     }
-    fs.writeFile(filepath, JSON.stringify(jsonData), (err) => {});
+    fs.writeFile(filepath, JSON.stringify(jsonData), (err) => {
+      if (err) {
+        res.send({ message: err.message });
+      }
+    });
 
-    res.json(jsonData);
+    res.json(res.locals.blogpost);
   });
 };
 export const updateBlogPost = (req, res) => {
