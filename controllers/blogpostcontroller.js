@@ -42,9 +42,8 @@ export const saveBlogPost = (req, res) => {
     } else {
       jsonData = JSON.parse(data);
       jsonData[res.locals.blogpost.id] = res.locals.blogpost;
-      console.log("here");
     }
-    console.log(jsonData);
+
     fs.writeFileSync(filepath, JSON.stringify(jsonData), (err) => {});
 
     return res.json(res.locals.blogpost);
@@ -64,9 +63,8 @@ export const updateBlogPost = (req, res) => {
       });
     }
     data[res.locals.blogpost.id] = res.locals.blogpost;
-    console.log(data);
+
     fs.writeFile(filepath, JSON.stringify(data), (err) => {
-      console.log("here");
       return res.json(res.locals.blogpost);
     });
   });
@@ -80,7 +78,7 @@ export const deleteBlogPost = (req, res) => {
 
     data = JSON.parse(data);
     var blogpost = data[req.params.id];
-    console.log(blogpost);
+
     if (blogpost == undefined) {
       return res.json({
         message: "BlogPost for given id " + req.params.id + " Not Found",
@@ -88,10 +86,8 @@ export const deleteBlogPost = (req, res) => {
     }
     delete data[blogpost.id];
     if (Object.keys(data).length == 0) {
-      console.log("here");
       fs.unlinkSync(filepath);
     } else {
-      console.log(data);
       fs.writeFile(filepath, JSON.stringify(data), (err) => {});
     }
     res.json({
