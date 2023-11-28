@@ -27,7 +27,7 @@ export const getAllBlogPost = async (req, res) => {
     });
   });
 };
-
+//get blogpost by id
 export const getById = async (req, res) => {
   await getBlogPostByIdService(req.params.id).then((blogPost) => {
     if (blogPost == undefined) {
@@ -44,7 +44,7 @@ export const getById = async (req, res) => {
     });
   });
 };
-
+//save blogpost
 export const saveBlogPost = async (req, res) => {
   await saveBlogPostService(res.locals.blogPost).then((blogPost) => {
     return res.status(201).json({
@@ -54,6 +54,7 @@ export const saveBlogPost = async (req, res) => {
     });
   });
 };
+//update blogpost
 export const updateBlogPost = async (req, res) => {
   await updateBlogPostService(res.locals.blogPost).then((blogPost) => {
     if (blogPost == undefined) {
@@ -70,7 +71,7 @@ export const updateBlogPost = async (req, res) => {
     });
   });
 };
-//delete
+//delete blog post
 export const deleteBlogPost = async (req, res) => {
   await deleteBlogPostService(req.params.id).then((blogPost) => {
     if (blogPost == undefined) {
