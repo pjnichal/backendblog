@@ -1,6 +1,6 @@
 import { BlogPost } from "../models/blogpostmodel.js";
 import crypto from "crypto";
-export const postvalitor = (req, res, next) => {
+export const postvalidator = (req, res, next) => {
   var blogPost = new BlogPost();
   blogPost.title = req.body.title;
 

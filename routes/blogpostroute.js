@@ -6,11 +6,11 @@ import {
   deleteBlogPost,
   getById,
 } from "../controllers/blogpostcontroller.js";
-import { postvalitor } from "../validator/postvalidator.js";
+import { postvalidator } from "../validator/postvalidator.js";
 let router = Router();
 router.get("/getall", getAllBlogPost);
 router.get("/getbyid/:id", getById);
-router.post("/save", postvalitor, saveBlogPost);
-router.patch("/update", postvalitor, updateBlogPost);
+router.post("/save", postvalidator, saveBlogPost);
+router.patch("/update", postvalidator, updateBlogPost);
 router.delete("/delete/:id", deleteBlogPost);
 export default router;
