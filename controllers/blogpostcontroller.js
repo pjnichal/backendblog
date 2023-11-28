@@ -52,7 +52,7 @@ export const saveBlogPost = (req, res) => {
 };
 export const updateBlogPost = (req, res) => {
   fs.readFile(filepath, function (err, data) {
-    if (err.code == "ENOENT") {
+    if (err && err.code == "ENOENT") {
       return res.json({ message: "No Posts Found" });
     }
     data = JSON.parse(data);
@@ -67,7 +67,7 @@ export const updateBlogPost = (req, res) => {
     console.log(data);
     fs.writeFile(filepath, JSON.stringify(data), (err) => {
       console.log("here");
-      return res.json(data);
+      return res.json(res.locals.blogpost);
     });
   });
 };
