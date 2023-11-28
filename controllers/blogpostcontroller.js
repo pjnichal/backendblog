@@ -26,28 +26,28 @@ export const getById = (req, res) => {
   });
 };
 
-export const saveBlogPost = (req, res) => {
+export const saveBlogPost = (blogpost, res) => {
   fs.readFile(filepath, function (err, data) {
     data = JSON.parse(data);
 
-    data["user5"] = req.body;
+    data[blogpost] = blogpost;
     console.log(data);
     fs.writeFile(filepath, JSON.stringify(data), (err) => {});
     console.log("here");
     res.json(data);
   });
 };
-export const updateBlogPost = (req, res) => {
+export const updateBlogPost = (blogpost, res) => {
   fs.readFile(filepath, function (err, data) {
     data = JSON.parse(data);
-    
-    data["user" + req.body.id] = req.body;
+
+    data[blogpost.id] = blogpost;
     console.log(data);
-    fs.writeFile(filepath, JSON.stringify(data), (err) => {});
-    console.log("here");
-    res.json(data);
+    fs.writeFile(filepath, JSON.stringify(data), (err) => {
+      console.log("here");
+      res.json(data);
+    });
   });
-  res.send("Update");
 };
 
 export const deleteBlogPost = (req, res) => {
@@ -57,7 +57,6 @@ export const deleteBlogPost = (req, res) => {
 
     console.log(data);
     fs.writeFile(filepath, JSON.stringify(data), (err) => {});
-    res.end(JSON.stringify(data));
+    res.json(data);
   });
-  res.send("Delete");
 };
