@@ -46,7 +46,7 @@ export const getById = async (req, res) => {
 };
 //save blogpost
 export const saveBlogPost = async (req, res) => {
-  await saveBlogPostService(res.locals.blogPost).then((blogPost) => {
+  await saveBlogPostService(res.locals.blogpost).then((blogPost) => {
     return res.status(201).json({
       status: 201,
       message: "Post Inserted Successfully",
@@ -56,11 +56,12 @@ export const saveBlogPost = async (req, res) => {
 };
 //update blogpost
 export const updateBlogPost = async (req, res) => {
-  await updateBlogPostService(res.locals.blogPost).then((blogPost) => {
+  await updateBlogPostService(res.locals.blogpost).then((blogPost) => {
     if (blogPost == undefined) {
       return res.status(404).json({
         status: 404,
-        message: "BlogPost for given id " + req.params.id + " Not Found",
+        message:
+          "BlogPost for given id " + res.locals.blogpost.id + " Not Found",
         data: {},
       });
     }
