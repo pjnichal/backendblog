@@ -10,7 +10,7 @@ export const getAllBlogPostsService = () => {
   return new Promise((resolve, reject) => {
     fs.readFile(filepath, "utf8", function (err, data) {
       if (err && err.code == "ENOENT") {
-        return resolve(undefined);
+        return reject();
       }
       const jsonData = JSON.parse(data);
       return resolve(jsonData);
@@ -22,12 +22,12 @@ export const getBlogPostByIdService = (id) => {
   return new Promise((resolve, reject) => {
     fs.readFile(filepath, function (err, data) {
       if (err && err.code == "ENOENT") {
-        return resolve(undefined);
+        return reject();
       }
       var blogposts = JSON.parse(data);
       var blogpost = blogposts[id];
       if (data.length == 0 || blogpost == undefined) {
-        return resolve(undefined);
+        return reject();
       }
       return resolve(blogpost);
     });
@@ -37,13 +37,13 @@ export const deleteBlogPostService = (id) => {
   return new Promise((resolve, reject) => {
     fs.readFile(filepath, function (err, data) {
       if (err && err.code == "ENOENT") {
-        return resolve(undefined);
+        return reject();
       }
       data = JSON.parse(data);
       var blogpost = data[id];
 
       if (blogpost == undefined) {
-        return resolve(undefined);
+        return reject();
       }
       delete data[blogpost.id];
       if (Object.keys(data).length == 0) {
@@ -80,7 +80,7 @@ export const updateBlogPostService = (blogpost) => {
   return new Promise((resolve, reject) => {
     fs.readFile(filepath, function (err, data) {
       if (err && err.code == "ENOENT") {
-        return resolve(undefined);
+        return reject();
       }
       data = JSON.parse(data);
       var blogPost = data[blogpost.id];

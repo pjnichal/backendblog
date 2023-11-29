@@ -29,20 +29,21 @@ export const getAllBlogPost = async (req, res) => {
 };
 //get blogpost by id
 export const getById = async (req, res) => {
-  await getBlogPostByIdService(req.params.id).then((blogPost) => {
-    if (blogPost == undefined) {
+  await getBlogPostByIdService(req.params.id)
+    .then((blogPost) => {
+      return res.status(201).json({
+        status: 201,
+        message: "Posts Fetched Successfully",
+        data: blogPost,
+      });
+    })
+    .catch(() => {
       return res.status(404).json({
         status: 404,
         message: "BlogPost for given id " + req.params.id + " Not Found",
         data: {},
       });
-    }
-    return res.status(201).json({
-      status: 201,
-      message: "Posts Fetched Successfully",
-      data: blogPost,
     });
-  });
 };
 //save blogpost
 export const saveBlogPost = async (req, res) => {
@@ -56,36 +57,38 @@ export const saveBlogPost = async (req, res) => {
 };
 //update blogpost
 export const updateBlogPost = async (req, res) => {
-  await updateBlogPostService(res.locals.blogpost).then((blogPost) => {
-    if (blogPost == undefined) {
+  await updateBlogPostService(res.locals.blogpost)
+    .then((blogPost) => {
+      return res.status(201).json({
+        status: 201,
+        message: "Post Updated Successfully",
+        data: blogPost,
+      });
+    })
+    .catch(() => {
       return res.status(404).json({
         status: 404,
         message:
           "BlogPost for given id " + res.locals.blogpost.id + " Not Found",
         data: {},
       });
-    }
-    return res.status(201).json({
-      status: 201,
-      message: "Post Updated Successfully",
-      data: res.locals.blogpost,
     });
-  });
 };
 //delete blog post
 export const deleteBlogPost = async (req, res) => {
-  await deleteBlogPostService(req.params.id).then((blogPost) => {
-    if (blogPost == undefined) {
+  await deleteBlogPostService(req.params.id)
+    .then((blogPost) => {
+      return res.status(201).json({
+        status: 201,
+        message: "Blog Post Deleted Successfully",
+        data: blogPost,
+      });
+    })
+    .catch(() => {
       return res.status(404).json({
         status: 404,
         message: "BlogPost for given id " + req.params.id + " Not Found",
         data: {},
       });
-    }
-    return res.status(201).json({
-      status: 201,
-      message: "Blog Post Deleted Successfully",
-      data: blogPost,
     });
-  });
 };
