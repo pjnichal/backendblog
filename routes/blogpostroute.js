@@ -6,7 +6,7 @@ import {
   deleteBlogPost,
   getById,
 } from "../controllers/blogpostcontroller.js";
-import { postvalidator } from "../validator/postvalidator.js";
+import { postValidator } from "../validator/postvalidator.js";
 let router = Router();
 router.get("/getall", getAllBlogPost);
 router.get("/getbyid/:id", getById);

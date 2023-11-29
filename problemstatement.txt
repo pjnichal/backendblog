@@ -3,4 +3,4 @@ Add end point for getall, getbyid, save, update, delete
 Use in-memory data store or file based database (eg. JSON file) 
 
 //note
-Which means not to use any DBMS like (Mongo or MySQL)
+Which means not to use any DBMS like (MongoDB or MySQL)
