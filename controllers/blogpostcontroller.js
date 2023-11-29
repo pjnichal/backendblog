@@ -5,14 +5,6 @@ import {
   saveBlogPostService,
   updateBlogPostService,
 } from "../services/postservices.js";
-import fs from "fs";
-import { fileURLToPath } from "url";
-import path, { dirname } from "path";
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-var filepath = path.join(__dirname, "..", "jsondatastore/blogpost.json");
-
 export const getAllBlogPost = async (req, res) => {
   await getAllBlogPostsService().then((blogPost) => {
     if (blogPost == undefined) {
