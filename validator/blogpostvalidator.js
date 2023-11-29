@@ -14,7 +14,7 @@ export const blogPostValidator = (req, res, next) => {
     validationErrors["content"] = "Please Add Content";
   }
   //only for update
-  if ((req.method = "PATCH" && req.body.id == undefined)) {
+  if (req.method == "PATCH" && req.body.id == undefined) {
     validationErrors["id"] = "Please Add Id";
   }
 
@@ -28,7 +28,7 @@ export const blogPostValidator = (req, res, next) => {
 
   blogPost.title = req.body.title;
 
-  if ((req.method = "PATCH")) {
+  if (req.method == "PATCH") {
     blogPost.id = req.body.id;
   } else {
     blogPost.id = crypto.randomUUID();
