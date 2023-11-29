@@ -6,18 +6,19 @@ import {
   updateBlogPostService,
 } from "../services/postservices.js";
 export const getAllBlogPost = async (req, res) => {
-  await getAllBlogPostsService().then((blogPost) => {
-    if (blogPost == undefined) {
+  await getAllBlogPostsService()
+    .then((blogPost) => {
+      return res.status(201).json({
+        status: 201,
+        message: "Posts Fetched Successfully",
+        data: blogPost,
+      });
+    })
+    .catch(() => {
       return res
         .status(404)
         .json({ status: 404, message: "No Posts Found", data: {} });
-    }
-    return res.status(201).json({
-      status: 201,
-      message: "Posts Fetched Successfully",
-      data: blogPost,
     });
-  });
 };
 //get blogpost by id
 export const getById = async (req, res) => {
