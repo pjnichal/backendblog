@@ -9,17 +9,11 @@ var filepath = path.join(__dirname, "..", "jsondatastore/blogpost.json");
 export const getAllBlogPostsService = () => {
   return new Promise((resolve, reject) => {
     fs.readFile(filepath, "utf8", function (err, data) {
-      console.log(err);
       if (err && err.code == "ENOENT") {
-        console.log("HERE");
-
-        resolve(undefined);
-      } else {
-        const jsonData = JSON.parse(data);
-        console.log("DATA PRINT");
-        console.log(jsonData);
-        resolve(jsonData);
+        return resolve(undefined);
       }
+      const jsonData = JSON.parse(data);
+      return resolve(jsonData);
     });
   });
 };
