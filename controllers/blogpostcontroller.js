@@ -26,7 +26,7 @@ export const getBlogPostById = async (req, res) => {
     .then((blogPost) => {
       return res.status(201).json({
         status: 201,
-        message: "Posts Fetched Successfully",
+        message: "Post Fetched Successfully",
         data: blogPost,
       });
     })
