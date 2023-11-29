@@ -85,7 +85,7 @@ export const updateBlogPostService = (blogpost) => {
       data = JSON.parse(data);
       var blogPost = data[blogpost.id];
       if (blogPost == undefined) {
-        return resolve(blogPost);
+        return reject();
       }
       data[blogpost.id] = blogpost;
 
