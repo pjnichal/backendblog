@@ -5,14 +5,14 @@ export const postValidator = (req, res, next) => {
   var validationErrors = {};
   if (req.body.title == undefined) {
     validationErrors["title"] = "Please Add Title";
-  } else if (req.body.author == undefined) {
+  }
+  if (req.body.author == undefined) {
     validationErrors["author"] = "Please Add Author";
-  } else if (req.body.content == undefined) {
+  }
+  if (req.body.content == undefined) {
     validationErrors["content"] = "Please Add Content";
-  } else if (
-    req.originalUrl == "/blogpost/update" &&
-    req.body.id == undefined
-  ) {
+  }
+  if (req.originalUrl == "/blogpost/update" && req.body.id == undefined) {
     validationErrors["id"] = "Please Add Id";
   }
 
