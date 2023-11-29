@@ -4,13 +4,13 @@ import {
   saveBlogPost,
   updateBlogPost,
   deleteBlogPost,
-  getById,
+  getBlogPostById,
 } from "../controllers/blogpostcontroller.js";
-import { postValidator } from "../validator/postvalidator.js";
+import { blogPostValidator } from "../validator/blogpostvalidator.js";
 let router = Router();
-router.get("/getall", getAllBlogPost);
-router.get("/getbyid/:id", getById);
-router.post("/save", postValidator, saveBlogPost);
-router.patch("/update", postValidator, updateBlogPost);
-router.delete("/delete/:id", deleteBlogPost);
+router.get("/", getAllBlogPost);
+router.get("/:id", getBlogPostById);
+router.post("/", blogPostValidator, saveBlogPost);
+router.patch("/", blogPostValidator, updateBlogPost);
+router.delete(":id", deleteBlogPost);
 export default router;

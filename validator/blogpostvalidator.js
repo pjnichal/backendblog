@@ -1,6 +1,6 @@
 import { BlogPost } from "../models/blogpostmodel.js";
 import crypto from "crypto";
-export const postValidator = (req, res, next) => {
+export const blogPostValidator = (req, res, next) => {
   var blogPost = new BlogPost();
   var validationErrors = {};
   //for save and update

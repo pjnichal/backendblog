@@ -1,4 +1,4 @@
-Create Rest api for blogpost CRUD operations
+Create Rest api for blogpost CRUD operations using express.js
 Add end point for getall, getbyid, save, update, delete
 Use in-memory data store or file based database (eg. JSON file) 
 

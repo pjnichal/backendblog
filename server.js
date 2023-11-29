@@ -4,7 +4,7 @@ import postRouter from "./routes/blogpostroute.js";
 import bodyParser from "body-parser";
 app.use(bodyParser.json());
 const port = 3000;
-app.use("/blogpost", postRouter);
+app.use("/blogposts", postRouter);
 app.listen(port, () => {
   console.log(`Server running on ${port}`);
 });

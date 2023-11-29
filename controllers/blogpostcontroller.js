@@ -21,7 +21,7 @@ export const getAllBlogPost = async (req, res) => {
     });
 };
 //get blogpost by id
-export const getById = async (req, res) => {
+export const getBlogPostById = async (req, res) => {
   await getBlogPostByIdService(req.params.id)
     .then((blogPost) => {
       return res.status(201).json({
