@@ -26,7 +26,7 @@ export const getBlogPostByIdService = (id) => {
       }
       var blogposts = JSON.parse(data);
       var blogpost = blogposts[id];
-      if (data.length == 0 || blogpost == undefined) {
+      if (blogpost == undefined) {
         return reject();
       }
       return resolve(blogpost);
