@@ -75,6 +75,7 @@ export const saveBlogPostService = (blogPost) => {
     });
   });
 };
+//update the blog post
 export const updateBlogPostService = (blogpost) => {
   return new Promise((resolve, reject) => {
     fs.readFile(filepath, function (err, data) {
