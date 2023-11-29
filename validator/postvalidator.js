@@ -3,6 +3,7 @@ import crypto from "crypto";
 export const postValidator = (req, res, next) => {
   var blogPost = new BlogPost();
   var validationErrors = {};
+  //for save and update
   if (req.body.title == undefined) {
     validationErrors["title"] = "Please Add Title";
   }
@@ -12,6 +13,7 @@ export const postValidator = (req, res, next) => {
   if (req.body.content == undefined) {
     validationErrors["content"] = "Please Add Content";
   }
+  //only for update
   if (req.originalUrl == "/blogpost/update" && req.body.id == undefined) {
     validationErrors["id"] = "Please Add Id";
   }
