@@ -1,0 +1,6 @@
+Create Rest api for blogpost CRUD operations
+add end point for getall, getbyid, save, update, delete
+use in-memory data store or file based database (eg. JSON file) 
+
+//note
+which means not to use any DBMS like (Mongo or MySQL)
