@@ -49,7 +49,7 @@ export const deleteBlogPostService = (id) => {
       if (Object.keys(data).length == 0) {
         fs.unlinkSync(filepath);
       } else {
-        fs.writeFile(filepath, JSON.stringify(data), (err) => {});
+        fs.writeFileSync(filepath, JSON.stringify(data));
       }
       return resolve(blogpost);
     });
@@ -69,7 +69,7 @@ export const saveBlogPostService = (blogPost) => {
         jsonData[blogPost.id] = blogPost;
       }
 
-      fs.writeFileSync(filepath, JSON.stringify(jsonData), (err) => {});
+      fs.writeFileSync(filepath, JSON.stringify(jsonData));
 
       return resolve(blogPost);
     });
