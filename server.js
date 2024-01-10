@@ -2,8 +2,14 @@ import express from "express";
 const app = express();
 import postRouter from "./routes/blogpostroute.js";
 import bodyParser from "body-parser";
+import cors from "cors"
+
+
+
+app.use(cors());
 app.use(bodyParser.json());
-const port = 3000;
+const port = 4000;
+
 app.use("/blogposts", postRouter);
 app.all("*", (req, res) => {
   res
