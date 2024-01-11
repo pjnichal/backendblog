@@ -31,6 +31,7 @@ export const getBlogPostById = async (req, res) => {
       });
     })
     .catch(() => {
+      console.log("RUNNING CATCH")
       return res.status(404).json({
         status: 404,
         message: "BlogPost for given id " + req.params.id + " Not Found",
@@ -45,6 +46,12 @@ export const saveBlogPost = async (req, res) => {
       status: 201,
       message: "Post Inserted Successfully",
       data: blogPost,
+    });
+  }).catch((error)=>{
+    return res.status(403).json({
+      status: 403,
+      message: "ValError",
+      error: error,
     });
   });
 };
