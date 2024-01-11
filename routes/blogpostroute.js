@@ -6,11 +6,13 @@ import {
   deleteBlogPost,
   getBlogPostById,
   findByText,
+  getPopularBlogPost,
 } from "../controllers/blogpostcontroller.js";
 import { auth } from "../middleware/auth.js";
 
 let router = Router();
 router.get("/", auth, getAllBlogPost);
+router.get("/popular", auth, getPopularBlogPost);
 router.get("/:id", auth, getBlogPostById);
 router.post("/", auth, saveBlogPost);
 router.patch("/:id", auth, updateBlogPost);

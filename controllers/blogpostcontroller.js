@@ -5,9 +5,19 @@ import {
   saveBlogPostService,
   updateBlogPostService,
   getByText,
+  getMostPopular,
 } from "../services/postservices.js";
 export const getAllBlogPost = async (req, res) => {
   await getAllBlogPostsService()
+    .then((result) => {
+      return res.status(201).json(result);
+    })
+    .catch((error) => {
+      return res.status(404).json(error);
+    });
+};
+export const getPopularBlogPost = async (req, res) => {
+  await getMostPopular()
     .then((result) => {
       return res.status(201).json(result);
     })
