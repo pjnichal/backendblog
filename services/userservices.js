@@ -41,8 +41,7 @@ export const login = (cred) => {
 
     // return resolve(user);
     console.log(user.password);
-    console.log(bcrypt.compareSync(user.password, password));
-    if (bcrypt.compareSync(user.password, password)) {
+    if (bcrypt.compareSync(password, user.password)) {
       return resolve({
         token: jwt.sign({ email: user.email, _id: user._id }, "RESTFULAPIs"),
       });
