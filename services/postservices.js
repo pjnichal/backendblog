@@ -20,12 +20,22 @@ export const deleteBlogPostService = (id) => {
 };
 //save blog post
 export const saveBlogPostService = (blogPost) => {
-  return new Promise((resolve, reject) => {
+  return new Promise(async (resolve, reject) => {
     console.log(blogPost)
-   const post = BlogPost({...blogPost});
-   post.save();
+    try {
+      const post = BlogPost({...blogPost});
+      console.log("SAVING");
+       await post.save();
+       console.log("RUNNIGN");
+      return resolve(post);
+    } catch (error) {
+      console.log("ERROR")
+      console.log(error);
+      resolve(error);
+    }
+  
    
-   resolve(post);
+  
    
   });
 };
