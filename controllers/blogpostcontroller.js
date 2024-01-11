@@ -1,3 +1,5 @@
+import { createClient } from "redis";
+
 import {
   deleteBlogPostService,
   getAllBlogPostsService,
@@ -38,6 +40,14 @@ export const findByText = async (req, res) => {
 export const getBlogPostById = async (req, res) => {
   await getBlogPostByIdService(req.params.id)
     .then((result) => {
+      // const redisClient = new Redis({
+      //   port: 33657,
+      //   host: "usw1-learning-basilisk-33657.upstash.io",
+      //   password: "943df4edddbe457aa7213b4e63f32330",
+      // });
+const client = createClient()
+      // const pid = req.params.id;
+      // client.hSet("popularBlogs", { pid: { occur: 11, exp: new Date() } });
       return res.status(201).json(result);
     })
     .catch((error) => {
