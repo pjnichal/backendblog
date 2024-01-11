@@ -47,6 +47,34 @@ export const getBlogPostByIdService = async (id) => {
     }
   });
 };
+export const getByText = async (text) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      console.log("called");
+      const blogPost = await BlogPost.find({ $text: { $search: text } });
+      if (blogPost != null) {
+        return resolve({
+          status: 200,
+          code: "POSTS",
+          message: "Posts fetched successfully",
+          data: blogPost,
+        });
+      } else {
+        return reject({
+          status: 404,
+          code: "POSTF",
+          message: "Post not found",
+        });
+      }
+    } catch (error) {
+      reject({
+        status: 404,
+        code: "POSTF",
+        message: "Post not found",
+      });
+    }
+  });
+};
 export const deleteBlogPostService = (id) => {
   return new Promise(async (resolve, reject) => {
     try {

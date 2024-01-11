@@ -13,10 +13,9 @@ const blogPost = new mongoose.Schema({
     type: String,
     required: true,
   },
-  time : { type : Date, default: Date.now }
-
+  time: { type: Date, default: Date.now },
 });
-
+blogPost.index({ "$**": "text" });
 const BlogPost = mongoose.model("BlogPost", blogPost);
 
-export {BlogPost};
+export { BlogPost };

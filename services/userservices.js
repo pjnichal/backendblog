@@ -61,7 +61,7 @@ export const login = (cred) => {
         { email: user.email, _id: user._id },
         "RESTFULAPIs",
         {
-          expiresIn: 10,
+          expiresIn: "1d",
         }
       );
       await User.updateOne(
@@ -102,7 +102,7 @@ export const getaccessToken = (refreshToken) => {
           { email: user.email, _id: user._id },
           "RESTFULAPIs",
           {
-            expiresIn: 10,
+            expiresIn: "1d",
           }
         );
         return resolve({

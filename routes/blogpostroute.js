@@ -5,6 +5,7 @@ import {
   updateBlogPost,
   deleteBlogPost,
   getBlogPostById,
+  findByText,
 } from "../controllers/blogpostcontroller.js";
 import { auth } from "../middleware/auth.js";
 
@@ -14,4 +15,5 @@ router.get("/:id", auth, getBlogPostById);
 router.post("/", auth, saveBlogPost);
 router.patch("/:id", auth, updateBlogPost);
 router.delete("/:id", auth, deleteBlogPost);
+router.post("/getbytext", auth, findByText);
 export default router;

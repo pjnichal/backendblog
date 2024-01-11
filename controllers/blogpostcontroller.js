@@ -4,9 +4,20 @@ import {
   getBlogPostByIdService,
   saveBlogPostService,
   updateBlogPostService,
+  getByText,
 } from "../services/postservices.js";
 export const getAllBlogPost = async (req, res) => {
   await getAllBlogPostsService()
+    .then((result) => {
+      return res.status(201).json(result);
+    })
+    .catch((error) => {
+      return res.status(404).json(error);
+    });
+};
+export const findByText = async (req, res) => {
+  console.log(req.query.text);
+  await getByText(req.body.text)
     .then((result) => {
       return res.status(201).json(result);
     })
