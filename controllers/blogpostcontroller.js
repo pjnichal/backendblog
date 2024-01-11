@@ -7,88 +7,50 @@ import {
 } from "../services/postservices.js";
 export const getAllBlogPost = async (req, res) => {
   await getAllBlogPostsService()
-    .then((blogPost) => {
-      return res.status(201).json({
-        status: 201,
-        message: "Posts Fetched Successfully",
-        data: blogPost,
-      });
+    .then((result) => {
+      return res.status(201).json(result);
     })
-    .catch(() => {
-      return res
-        .status(404)
-        .json({ status: 404, message: "No Posts Found", data: {} });
+    .catch((error) => {
+      return res.status(404).json(error);
     });
 };
 //get blogpost by id
 export const getBlogPostById = async (req, res) => {
   await getBlogPostByIdService(req.params.id)
-    .then((blogPost) => {
-      return res.status(201).json({
-        status: 201,
-        message: "Post Fetched Successfully",
-        data: blogPost,
-      });
+    .then((result) => {
+      return res.status(201).json(result);
     })
-    .catch(() => {
-      console.log("RUNNING CATCH")
-      return res.status(404).json({
-        status: 404,
-        message: "BlogPost for given id " + req.params.id + " Not Found",
-        data: {},
-      });
+    .catch((error) => {
+      return res.status(404).json(error);
     });
 };
 //save blogpost
 export const saveBlogPost = async (req, res) => {
-  await saveBlogPostService(req.body).then((blogPost) => {
-    return res.status(201).json({
-      status: 201,
-      message: "Post Inserted Successfully",
-      data: blogPost,
+  await saveBlogPostService(req.body)
+    .then((result) => {
+      return res.status(201).json(result);
+    })
+    .catch((error) => {
+      return res.status(403).json(error);
     });
-  }).catch((error)=>{
-    return res.status(403).json({
-      status: 403,
-      message: "ValError",
-      error: error,
-    });
-  });
 };
 //update blogpost
 export const updateBlogPost = async (req, res) => {
-  await updateBlogPostService(req.params.id,req.body)
-    .then((blogPost) => {
-      return res.status(201).json({
-        status: 201,
-        message: "Post Updated Successfully",
-        data: blogPost,
-      });
+  await updateBlogPostService(req.params.id, req.body)
+    .then((result) => {
+      return res.status(201).json(result);
     })
-    .catch(() => {
-      return res.status(404).json({
-        status: 404,
-        message:
-          "BlogPost for given id " + req.params.id + " Not Found",
-        data: {},
-      });
+    .catch((error) => {
+      return res.status(404).json(error);
     });
 };
 //delete blog post
 export const deleteBlogPost = async (req, res) => {
   await deleteBlogPostService(req.params.id)
-    .then((blogPost) => {
-      return res.status(201).json({
-        status: 201,
-        message: "Blog Post Deleted Successfully",
-        data: blogPost,
-      });
+    .then((result) => {
+      return res.status(201).json(result);
     })
-    .catch(() => {
-      return res.status(404).json({
-        status: 404,
-        message: "BlogPost for given id " + req.params.id + " Not Found",
-        data: {},
-      });
+    .catch((error) => {
+      return res.status(404).json(error);
     });
 };

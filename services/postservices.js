@@ -3,11 +3,19 @@ import { BlogPost } from "../models/blogpost.js";
 export const getAllBlogPostsService = () => {
   return new Promise(async (resolve, reject) => {
     const allblogPosts = await BlogPost.find();
-
     if (allblogPosts.length > 0) {
-      return resolve(allblogPosts);
+      return resolve({
+        status: 200,
+        code: "POSTS",
+        message: "Posts fetched successfully",
+        data: allblogPosts,
+      });
     } else {
-      return reject();
+      return reject({
+        status: 404,
+        code: "POSTF",
+        message: "Posts not found",
+      });
     }
   });
 };
@@ -15,14 +23,27 @@ export const getAllBlogPostsService = () => {
 export const getBlogPostByIdService = async (id) => {
   return new Promise(async (resolve, reject) => {
     try {
-      const allblogPosts = await BlogPost.findOne({ _id: id });
-      if (allblogPosts != null) {
-        return resolve(allblogPosts);
+      const blogPost = await BlogPost.findOne({ _id: id });
+      if (blogPost != null) {
+        return resolve({
+          status: 200,
+          code: "POSTS",
+          message: "Posts fetched successfully",
+          data: blogPost,
+        });
       } else {
-        return reject();
+        return reject({
+          status: 404,
+          code: "POSTF",
+          message: "Post not found",
+        });
       }
     } catch (error) {
-      reject();
+      reject({
+        status: 404,
+        code: "POSTF",
+        message: "Post not found",
+      });
     }
   });
 };
@@ -31,12 +52,23 @@ export const deleteBlogPostService = (id) => {
     try {
       const allblogPosts = await BlogPost.deleteOne({ _id: id });
       if (allblogPosts.deletedCount > 0) {
-        return resolve({ message: "Post Deleted" });
+        return resolve({
+          status: 201,
+          code: "POSTDS",
+          message: "Post deleted successfully",
+        });
       }
-      return reject();
+      return reject({
+        status: 404,
+        code: "POSTDF",
+        message: "Post not found",
+      });
     } catch (error) {
-      console.log(error);
-      reject();
+      return reject({
+        status: 404,
+        code: "POSTDF",
+        message: "Post delete fauled",
+      });
     }
   });
 };
@@ -47,13 +79,18 @@ export const saveBlogPostService = (blogPost) => {
     try {
       const post = BlogPost({ ...blogPost });
       await post.save();
-      return resolve(post);
+      return resolve({
+        status: 200,
+        code: "POSTSS",
+        message: "Post saved successfully",
+        data: post,
+      });
     } catch (error) {
-      let validationError = {};
-      for (const valerr in error.errors) {
-        validationError[valerr] = error.errors[valerr].message;
-      }
-      return reject(validationError);
+      return reject({
+        status: 500,
+        code: "POSTSF",
+        message: "Post not saved",
+      });
     }
   });
 };
@@ -65,9 +102,18 @@ export const updateBlogPostService = (id, blogpost) => {
     });
 
     if (updatedItem) {
-      return resolve(updatedItem);
+      return resolve({
+        status: 200,
+        code: "POSTUS",
+        message: "Posts fetched successfully",
+        data: updatedItem,
+      });
     } else {
-      return reject();
+      return reject({
+        status: 401,
+        code: "POSTUF",
+        message: "Post Update failed",
+      });
     }
   });
 };
