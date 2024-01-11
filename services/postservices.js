@@ -45,6 +45,15 @@ export const getBlogPostByIdService = async (id) => {
     try {
       const blogPost = await BlogPost.findOne({ _id: id });
       if (blogPost != null) {
+        let popular = await client.get("popular");
+        if(popular[id]){
+          popular[id]["count"] = popular[id]["count"] + 1;
+          client.set("popular", popular);
+        }else{
+          
+          client.set("popular", {});
+        }
+      
         
         return resolve({
           status: 200,
