@@ -1,3 +1,4 @@
+import { client } from "../config/redis.js";
 import { BlogPost } from "../models/blogpost.js";
 //Get All Posts
 export const getAllBlogPostsService = () => {
@@ -44,6 +45,7 @@ export const getBlogPostByIdService = async (id) => {
     try {
       const blogPost = await BlogPost.findOne({ _id: id });
       if (blogPost != null) {
+        
         return resolve({
           status: 200,
           code: "POSTS",
