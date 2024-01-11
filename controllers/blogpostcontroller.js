@@ -57,7 +57,7 @@ export const saveBlogPost = async (req, res) => {
 };
 //update blogpost
 export const updateBlogPost = async (req, res) => {
-  await updateBlogPostService(res.locals.blogpost)
+  await updateBlogPostService(req.params.id,req.body)
     .then((blogPost) => {
       return res.status(201).json({
         status: 201,
@@ -69,7 +69,7 @@ export const updateBlogPost = async (req, res) => {
       return res.status(404).json({
         status: 404,
         message:
-          "BlogPost for given id " + res.locals.blogpost.id + " Not Found",
+          "BlogPost for given id " + req.params.id + " Not Found",
         data: {},
       });
     });
