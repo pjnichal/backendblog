@@ -6,11 +6,12 @@ import {
   deleteBlogPost,
   getBlogPostById,
 } from "../controllers/blogpostcontroller.js";
+import { auth } from "../middleware/auth.js";
 
 let router = Router();
-router.get("/", getAllBlogPost);
-router.get("/:id", getBlogPostById);
-router.post("/", saveBlogPost);
-router.patch("/:id", updateBlogPost);
-router.delete("/:id", deleteBlogPost);
+router.get("/", auth, getAllBlogPost);
+router.get("/:id", auth, getBlogPostById);
+router.post("/", auth, saveBlogPost);
+router.patch("/:id", auth, updateBlogPost);
+router.delete("/:id", auth, deleteBlogPost);
 export default router;

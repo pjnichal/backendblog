@@ -25,6 +25,7 @@ export const saveUser = (user) => {
     }
   });
 };
+
 // export const updateUser = (id, user) => {
 //   return new Promise(async (resolve, reject) => {
 //     const updatedItem = await User.findByIdAndUpdate(id, user, {
@@ -60,11 +61,11 @@ export const login = (cred) => {
         { email: user.email, _id: user._id },
         "RESTFULAPIs",
         {
-          expiresIn: "1d",
+          expiresIn: 10,
         }
       );
       await User.updateOne(
-        { email: user.email },  
+        { email: user.email },
         { refreshToken: refreshToken }
       );
       return resolve({
@@ -83,5 +84,36 @@ export const login = (cred) => {
         message: "Invalid username or password",
       });
     }
+  });
+};
+export const getaccessToken = (refreshToken) => {
+  return new Promise(async (resolve, reject) => {
+    jwt.verify(refreshToken, "RESTFULAPIs", async (err, user) => {
+      if (err) {
+        return reject({
+          status: 403,
+          code: "ATE",
+          message: "refreshToken token invalid",
+        });
+      }
+      let userInDb = await User.findOne({ email: user.email });
+      if (userInDb.refreshToken === refreshToken) {
+        let accessToken = jwt.sign(
+          { email: user.email, _id: user._id },
+          "RESTFULAPIs",
+          {
+            expiresIn: 10,
+          }
+        );
+        return resolve({
+          status: 200,
+          code: "ATR",
+          message: "Acceess token granted",
+          data: {
+            accessToken: accessToken,
+          },
+        });
+      }
+    });
   });
 };
