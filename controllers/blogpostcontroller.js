@@ -16,7 +16,6 @@ export const getAllBlogPost = async (req, res) => {
     });
 };
 export const findByText = async (req, res) => {
-  console.log(req.query.text);
   await getByText(req.body.text)
     .then((result) => {
       return res.status(201).json(result);
