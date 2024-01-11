@@ -40,7 +40,7 @@ export const getBlogPostById = async (req, res) => {
 };
 //save blogpost
 export const saveBlogPost = async (req, res) => {
-  await saveBlogPostService(res.locals.blogpost).then((blogPost) => {
+  await saveBlogPostService(req.body).then((blogPost) => {
     return res.status(201).json({
       status: 201,
       message: "Post Inserted Successfully",

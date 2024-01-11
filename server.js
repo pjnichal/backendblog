@@ -1,14 +1,20 @@
 import express from "express";
 const app = express();
 import postRouter from "./routes/blogpostroute.js";
-import bodyParser from "body-parser";
+
 import cors from "cors"
+import mongoose from "mongoose";
 
 
 
 app.use(cors());
-app.use(bodyParser.json());
+app.use(express.json());
 const port = 4000;
+
+mongoose
+.connect("mongodb+srv://romrombhaiyo:pravin@blogsapp.jq89wvg.mongodb.net/?retryWrites=true&w=majority")
+.then(()=>console.log("Connected to Mongo DB Successfully."))
+.catch((err)=>console.log("Failed to connect with Mongo DB:",err));
 
 app.use("/blogposts", postRouter);
 app.all("*", (req, res) => {
