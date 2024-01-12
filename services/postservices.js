@@ -68,28 +68,26 @@ export const getBlogPostByIdService = async (id) => {
   return new Promise(async (resolve, reject) => {
     try {
       const blogPost = await BlogPost.findOne({ _id: id });
-
+      // await client.del(`popular:${id}`);
       if (blogPost != null) {
-        // await client.del(`popular:${id}`);
         try {
-          let popular = await client.hgetall(`popular:${id}`);
+          let popular = await client.get(`popular:${id}`);
 
-          // console.log(popular);
+          console.log(popular);
           if (popular == null) {
             const data = { count: 0, data: {} };
-            console.log("HserCalled");
-            // const stringData = JSON.stringify(data);
-            await client.hmset(`popular:${id}`, data);
-            let popular = await client.hgetall(`popular:${id}`);
-            console.log(popular);
+            const stringData = JSON.stringify(data);
+            await client.set(`popular:${id}`, stringData);
           } else {
-            let count = popular.count + 1;
-            if (count > 4 && Object.keys(popular).length == 0) {
+            const jsonData = JSON.parse(popular);
+            let count = jsonData.count + 1;
+            if (count > 4 && Object.keys(jsonData.data).length == 0) {
               console.log("set called");
               const data = { count: count, data: blogPost };
-              await client.hmset(`popular:${id}`, data);
+              const stringData = JSON.stringify(data);
+              await client.set(`popular:${id}`, stringData);
             } else {
-              const data = { count: count, data: popular };
+              const data = { count: count, data: jsonData.data };
               console.log(count);
               const stringData = JSON.stringify(data);
               await client.set(`popular:${id}`, stringData);
