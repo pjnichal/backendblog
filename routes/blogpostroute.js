@@ -18,4 +18,5 @@ router.post("/", auth, saveBlogPost);
 router.patch("/:id", auth, updateBlogPost);
 router.delete("/:id", auth, deleteBlogPost);
 router.post("/getbytext", auth, findByText);
+
 export default router;

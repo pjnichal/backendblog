@@ -22,19 +22,43 @@ export const getAllBlogPostsService = () => {
 };
 export const getMostPopular = () => {
   return new Promise(async (resolve, reject) => {
-    const allblogPosts = await BlogPost.find();
-    if (allblogPosts.length > 0) {
+    try {
+      const keys = await client.keys("*");
+      let popularList = [];
+      if (keys.length == 0) {
+        return reject({
+          status: 404,
+          code: "POSTF",
+          message: "No Popular Post",
+        });
+      }
+      const values = await client.mget(keys);
+
+      values.map((val) => {
+        const data = JSON.parse(val);
+        console.log(data);
+        if (data.count > 4) {
+          popularList.push(data);
+        }
+      });
+      if (popularList.length == 0) {
+        return reject({
+          status: 404,
+          code: "POSTF",
+          message: "No Popular Post",
+        });
+      }
       return resolve({
         status: 200,
         code: "POSTS",
         message: "Posts fetched successfully",
-        data: allblogPosts,
+        data: popularList,
       });
-    } else {
+    } catch (error) {
       return reject({
         status: 404,
         code: "POSTF",
-        message: "Posts not found",
+        message: "No Popular Post",
       });
     }
   });
@@ -130,6 +154,7 @@ export const deleteBlogPostService = (id) => {
     try {
       const allblogPosts = await BlogPost.deleteOne({ _id: id });
       if (allblogPosts.deletedCount > 0) {
+        await client.del(`popular:${id}`);
         return resolve({
           status: 201,
           code: "POSTDS",
