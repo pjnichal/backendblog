@@ -72,23 +72,24 @@ export const getBlogPostByIdService = async (id) => {
       if (blogPost != null) {
         // await client.del(`popular:${id}`);
         try {
-          let popular = await client.get(`popular:${id}`);
+          let popular = await client.hgetall(`popular:${id}`);
 
-          console.log(popular);
+          // console.log(popular);
           if (popular == null) {
             const data = { count: 0, data: {} };
-            const stringData = JSON.stringify(data);
-            await client.set(`popular:${id}`, stringData);
+            console.log("HserCalled");
+            // const stringData = JSON.stringify(data);
+            await client.hmset(`popular:${id}`, data);
+            let popular = await client.hgetall(`popular:${id}`);
+            console.log(popular);
           } else {
-            const jsonData = JSON.parse(popular);
-            let count = jsonData.count + 1;
-            if (count > 4 && Object.keys(jsonData.data).length == 0) {
+            let count = popular.count + 1;
+            if (count > 4 && Object.keys(popular).length == 0) {
               console.log("set called");
               const data = { count: count, data: blogPost };
-              const stringData = JSON.stringify(data);
-              await client.set(`popular:${id}`, stringData);
+              await client.hmset(`popular:${id}`, data);
             } else {
-              const data = { count: count, data: jsonData.data };
+              const data = { count: count, data: popular };
               console.log(count);
               const stringData = JSON.stringify(data);
               await client.set(`popular:${id}`, stringData);
