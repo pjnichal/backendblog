@@ -44,17 +44,36 @@ export const getBlogPostByIdService = async (id) => {
   return new Promise(async (resolve, reject) => {
     try {
       const blogPost = await BlogPost.findOne({ _id: id });
+
       if (blogPost != null) {
-        let popular = await client.get("popular");
-        if(popular[id]){
-          popular[id]["count"] = popular[id]["count"] + 1;
-          client.set("popular", popular);
-        }else{
-          
-          client.set("popular", {});
+        // await client.del(`popular:${id}`);
+        try {
+          let popular = await client.get(`popular:${id}`);
+
+          console.log(popular);
+          if (popular == null) {
+            const data = { count: 0, data: {} };
+            const stringData = JSON.stringify(data);
+            await client.set(`popular:${id}`, stringData);
+          } else {
+            const jsonData = JSON.parse(popular);
+            let count = jsonData.count + 1;
+            if (count > 4 && Object.keys(jsonData.data).length == 0) {
+              console.log("set called");
+              const data = { count: count, data: blogPost };
+              const stringData = JSON.stringify(data);
+              await client.set(`popular:${id}`, stringData);
+            } else {
+              const data = { count: count, data: jsonData.data };
+              console.log(count);
+              const stringData = JSON.stringify(data);
+              await client.set(`popular:${id}`, stringData);
+            }
+          }
+        } catch (error) {
+          console.log(error);
         }
-      
-        
+
         return resolve({
           status: 200,
           code: "POSTS",
@@ -73,6 +92,7 @@ export const getBlogPostByIdService = async (id) => {
         status: 404,
         code: "POSTF",
         message: "Post not found",
+        error: error,
       });
     }
   });
