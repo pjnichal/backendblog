@@ -19,6 +19,7 @@ export const loginandauth = async (req, res) => {
     });
 };
 export const accessToken = async (req, res) => {
+  // console.log(req.body);
   await getaccessToken(req.body.refreshToken)
     .then((token) => {
       return res.status(201).json(token);

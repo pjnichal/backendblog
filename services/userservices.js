@@ -96,8 +96,10 @@ export const getaccessToken = (refreshToken) => {
           message: "refreshToken token invalid",
         });
       }
+      console.log(user.email);
       let userInDb = await User.findOne({ email: user.email });
-      if (userInDb.refreshToken === refreshToken) {
+      if (userInDb.refreshToken == refreshToken) {
+        console.log("here");
         let accessToken = jwt.sign(
           { email: user.email, _id: user._id },
           "RESTFULAPIs",
@@ -114,6 +116,11 @@ export const getaccessToken = (refreshToken) => {
           },
         });
       }
+      return reject({
+        status: 401,
+        code: "ATF",
+        message: "invalid refresh",
+      });
     });
   });
 };
