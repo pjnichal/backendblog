@@ -1,13 +1,11 @@
 import jwt from "jsonwebtoken";
 export const auth = (req, res, next) => {
   const authHeader = req.headers.authorization;
-
   if (authHeader) {
     const token = authHeader.split(" ")[1];
-
     jwt.verify(token, "RESTFULAPIs", (err, user) => {
       if (err) {
-        return res.send({
+        return res.status(403).send({
           status: 403,
           code: "ATE",
           message: "access token invalid",
@@ -17,7 +15,7 @@ export const auth = (req, res, next) => {
       return next();
     });
   } else {
-    return res.send({
+    return res.status(403).send({
       status: 403,
       code: "ATM",
       message: "access token missing",
