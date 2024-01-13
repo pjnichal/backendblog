@@ -125,7 +125,8 @@ export const getByText = async (text) => {
     try {
       console.log("called");
       const blogPost = await BlogPost.find({ $text: { $search: text } });
-      if (blogPost != null) {
+      console.log(blogPost);
+      if (blogPost.length > 0) {
         return resolve({
           status: 200,
           code: "POSTS",
