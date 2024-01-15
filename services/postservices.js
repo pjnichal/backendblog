@@ -182,7 +182,7 @@ export const deleteBlogPostService = (id) => {
 export const saveBlogPostService = (blogPost) => {
   return new Promise(async (resolve, reject) => {
     console.log(blogPost);
-    
+
     try {
       const post = BlogPost({ ...blogPost });
       await post.save();
@@ -194,11 +194,15 @@ export const saveBlogPostService = (blogPost) => {
       });
     } catch (error) {
       console.log(error);
+      if (error.errors["tags"]) {
+        error.errors["tags"]["message"] = "`tags` is required.";
+      }
+
       return reject({
         status: 500,
         code: "POSTSF",
         message: "Post not saved",
-        validation: error,
+        validation: error.errors,
       });
     }
   });
