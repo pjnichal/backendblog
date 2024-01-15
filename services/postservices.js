@@ -157,7 +157,7 @@ export const deleteBlogPostService = (id) => {
     try {
       const allblogPosts = await BlogPost.deleteOne({ _id: id });
       if (allblogPosts.deletedCount > 0) {
-        await client.del(`popular:${id}`);
+        await clienxt.del(`popular:${id}`);
         return resolve({
           status: 201,
           code: "POSTDS",

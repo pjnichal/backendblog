@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { Schema } from "mongoose";
 
 const user = new mongoose.Schema({
   email: {
@@ -8,11 +8,12 @@ const user = new mongoose.Schema({
   },
   password: {
     type: String,
-    required: true,
+    required: true, 
   },
   refreshToken: {
     type: String,
   },
+  blogPosts: [{ type: Schema.Types.ObjectId, ref: "BlogPost" }],
 });
 
 const User = mongoose.model("User", user);
