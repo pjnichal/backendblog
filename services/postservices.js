@@ -36,9 +36,12 @@ export const getMostPopular = () => {
 
       values.map((val) => {
         const data = JSON.parse(val);
+        let finalData = data.data;
+        finalData["count"] = data.count;
+        console.log(data);
         console.log(data);
         if (data.count > 4) {
-          popularList.push(data);
+          popularList.push(finalData);
         }
       });
       if (popularList.length == 0) {
