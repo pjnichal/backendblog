@@ -6,6 +6,11 @@ const user = new mongoose.Schema({
     unique: true,
     required: true,
   },
+  name: {
+    type: String,
+
+    required: true,
+  },
   password: {
     type: String,
     required: true,
@@ -13,7 +18,6 @@ const user = new mongoose.Schema({
   refreshToken: {
     type: String,
   },
- 
 });
 
 const User = mongoose.model("User", user);

@@ -49,6 +49,8 @@ export const saveBlogPost = async (req, res) => {
   let data = req.body;
   console.log(req.user);
   data["user"] = req.user._id;
+  
+  data["author"] = req.user.name;
 
   await saveBlogPostService(req.body)
     .then((result) => {

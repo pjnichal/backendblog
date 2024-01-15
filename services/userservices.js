@@ -3,11 +3,17 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 export const saveUser = (user) => {
   return new Promise(async (resolve, reject) => {
-    const { email, password } = user;
-    const salt = bcrypt.genSaltSync(10);
-    let hashedPassword = bcrypt.hashSync(password, salt);
+    const { email, password, name } = user;
+    console.log(email);
+    console.log(password);
+    let hashedPassword;
+    if (password.trim() != "") {
+      const salt = bcrypt.genSaltSync(10);
+      hashedPassword = bcrypt.hashSync(password, salt);
+    }
+
     try {
-      const user = User({ email, password: hashedPassword });
+      const user = User({ email, password: hashedPassword, name });
       await user.save();
       return resolve({
         status: 201,
@@ -22,6 +28,15 @@ export const saveUser = (user) => {
           code: "UAE",
           message: "user with email address already exists",
         });
+
+      console.log(error);
+
+      return reject({
+        status: 500,
+        code: "UAF",
+        message: "Validation failed",
+        validation: error.errors,
+      });
     }
   });
 };
@@ -53,12 +68,12 @@ export const login = (cred) => {
     }
     if (bcrypt.compareSync(password, user.password)) {
       let refreshToken = jwt.sign(
-        { email: user.email, _id: user._id },
+        { email: user.email, _id: user._id, name: user.name },
         "RESTFULAPIs",
         { expiresIn: "7d" }
       );
       let accessToken = jwt.sign(
-        { email: user.email, _id: user._id },
+        { email: user.email, _id: user._id, name: user.name },
         "RESTFULAPIs",
         {
           expiresIn: "1d",
@@ -98,7 +113,7 @@ export const getaccessToken = (refreshToken) => {
       }
       console.log(user.email);
       let userInDb = await User.findOne({ email: user.email });
-      if (userInDb.refreshToken == refreshToken) {
+      if (userInDb && userInDb.refreshToken == refreshToken) {
         console.log("here");
         let accessToken = jwt.sign(
           { email: user.email, _id: user._id },
