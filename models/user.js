@@ -13,7 +13,7 @@ const user = new mongoose.Schema({
   refreshToken: {
     type: String,
   },
-  blogPosts: [{ type: Schema.Types.ObjectId, ref: "BlogPost" }],
+ 
 });
 
 const User = mongoose.model("User", user);

@@ -11,7 +11,7 @@ export const auth = (req, res, next) => {
           message: "access token invalid",
         });
       }
-
+      req.user = user;
       return next();
     });
   } else {

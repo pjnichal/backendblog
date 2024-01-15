@@ -18,6 +18,7 @@ const blogPost = new mongoose.Schema({
     required: true,
     validate: (v) => Array.isArray(v) && v.length > 0,
   },
+  user: { required: true, type: String },
   time: { type: Date, default: Date.now },
 });
 blogPost.index({ "$**": "text" });

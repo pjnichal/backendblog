@@ -6,7 +6,6 @@ import {
   updateBlogPostService,
   getByText,
   getMostPopular,
-
 } from "../services/postservices.js";
 export const getAllBlogPost = async (req, res) => {
   await getAllBlogPostsService()
@@ -47,6 +46,10 @@ export const getBlogPostById = async (req, res) => {
 };
 //save blogpost
 export const saveBlogPost = async (req, res) => {
+  let data = req.body;
+  console.log(req.user);
+  data["user"] = req.user._id;
+
   await saveBlogPostService(req.body)
     .then((result) => {
       return res.status(201).json(result);

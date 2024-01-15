@@ -182,6 +182,7 @@ export const deleteBlogPostService = (id) => {
 export const saveBlogPostService = (blogPost) => {
   return new Promise(async (resolve, reject) => {
     console.log(blogPost);
+    
     try {
       const post = BlogPost({ ...blogPost });
       await post.save();
@@ -192,10 +193,12 @@ export const saveBlogPostService = (blogPost) => {
         data: post,
       });
     } catch (error) {
+      console.log(error);
       return reject({
         status: 500,
         code: "POSTSF",
         message: "Post not saved",
+        validation: error,
       });
     }
   });
