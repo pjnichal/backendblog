@@ -232,6 +232,8 @@ export const saveBlogPostService = (blogPost) => {
 };
 //update the blog post
 export const updateBlogPostService = (id, blogpost) => {
+  console.log("updateBlogPostService");
+  console.log(blogpost);
   return new Promise(async (resolve, reject) => {
     const updatedItem = await BlogPost.findByIdAndUpdate(id, blogpost, {
       new: true,

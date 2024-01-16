@@ -75,6 +75,7 @@ export const saveBlogPost = async (req, res) => {
 };
 //update blogpost
 export const updateBlogPost = async (req, res) => {
+  console.log(req.body);
   await updateBlogPostService(req.params.id, req.body)
     .then((result) => {
       return res.status(201).json(result);
