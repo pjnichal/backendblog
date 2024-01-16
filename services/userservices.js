@@ -68,7 +68,6 @@ export const login = (cred) => {
     }
 
     if (bcrypt.compareSync(password, user.password)) {
-      console.log(user);
       let refreshToken = jwt.sign(
         { email: user.email, _id: user._id, name: user.name },
         "RESTFULAPIs",
