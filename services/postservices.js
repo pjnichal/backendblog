@@ -179,7 +179,7 @@ export const deleteBlogPostService = (id) => {
     try {
       const allblogPosts = await BlogPost.deleteOne({ _id: id });
       if (allblogPosts.deletedCount > 0) {
-        await clienxt.del(`popular:${id}`);
+        await client.del(`popular:${id}`);
         return resolve({
           status: 201,
           code: "POSTDS",
@@ -192,6 +192,7 @@ export const deleteBlogPostService = (id) => {
         message: "Post not found",
       });
     } catch (error) {
+      console.log(error);
       return reject({
         status: 404,
         code: "POSTDF",
