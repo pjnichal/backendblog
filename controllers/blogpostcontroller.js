@@ -49,7 +49,7 @@ export const saveBlogPost = async (req, res) => {
   let data = req.body;
   console.log(req.user);
   data["user"] = req.user._id;
-  
+  console.log(req.user.name);
   data["author"] = req.user.name;
 
   await saveBlogPostService(req.body)
