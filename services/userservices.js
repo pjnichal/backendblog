@@ -66,7 +66,9 @@ export const login = (cred) => {
         message: "User with this email does not exists",
       });
     }
+
     if (bcrypt.compareSync(password, user.password)) {
+      console.log(user);
       let refreshToken = jwt.sign(
         { email: user.email, _id: user._id, name: user.name },
         "RESTFULAPIs",
@@ -116,7 +118,7 @@ export const getaccessToken = (refreshToken) => {
       if (userInDb && userInDb.refreshToken == refreshToken) {
         console.log("here");
         let accessToken = jwt.sign(
-          { email: user.email, _id: user._id },
+          { email: user.email, _id: user._id, name: user.name },
           "RESTFULAPIs",
           {
             expiresIn: "1d",

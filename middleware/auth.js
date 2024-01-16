@@ -12,6 +12,8 @@ export const auth = (req, res, next) => {
         });
       }
       req.user = user;
+      console.log("USERRR");
+      console.log(user);
       return next();
     });
   } else {
