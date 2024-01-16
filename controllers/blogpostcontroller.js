@@ -6,6 +6,7 @@ import {
   updateBlogPostService,
   getByText,
   getMostPopular,
+  getByUserId,
 } from "../services/postservices.js";
 export const getAllBlogPost = async (req, res) => {
   await getAllBlogPostsService()
@@ -31,6 +32,18 @@ export const findByText = async (req, res) => {
       return res.status(201).json(result);
     })
     .catch((error) => {
+      return res.status(404).json(error);
+    });
+};
+export const getByUser = async (req, res) => {
+  console.log("CALEED");
+  console.log(req.user._id);
+  await getByUserId(req.user._id)
+    .then((result) => {
+      return res.status(201).json(result);
+    })
+    .catch((error) => {
+      console.log(error);
       return res.status(404).json(error);
     });
 };

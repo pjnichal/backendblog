@@ -20,6 +20,26 @@ export const getAllBlogPostsService = () => {
     }
   });
 };
+export const getByUserId = (id) => {
+  return new Promise(async (resolve, reject) => {
+    const allblogPosts = await BlogPost.find({ user: id });
+    if (allblogPosts.length > 0) {
+      return resolve({
+        status: 200,
+        code: "POSTS",
+        message: "Posts fetched successfully",
+        data: allblogPosts,
+      });
+    } else {
+      return reject({
+        status: 404,
+        code: "POSTF",
+        message: "Posts not found",
+      });
+    }
+  });
+};
+
 export const getMostPopular = () => {
   return new Promise(async (resolve, reject) => {
     try {

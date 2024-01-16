@@ -7,11 +7,13 @@ import {
   getBlogPostById,
   findByText,
   getPopularBlogPost,
+  getByUser,
 } from "../controllers/blogpostcontroller.js";
 import { auth } from "../middleware/auth.js";
 
 let router = Router();
 router.get("/", auth, getAllBlogPost);
+router.get("/getbyuser", auth, getByUser);
 router.get("/popular", auth, getPopularBlogPost);
 router.get("/:id", auth, getBlogPostById);
 router.post("/", auth, saveBlogPost);
