@@ -231,10 +231,18 @@ export const saveBlogPostService = (blogPost) => {
   });
 };
 //update the blog post
-export const updateBlogPostService = (id, blogpost) => {
+export const updateBlogPostService = (id, blogpost, userId) => {
   console.log("updateBlogPostService");
+
   console.log(blogpost);
   return new Promise(async (resolve, reject) => {
+    if (blogpost.user != userId) {
+      return reject({
+        status: 401,
+        code: "POSTUF",
+        message: "Post Update failed",
+      });
+    }
     const updatedItem = await BlogPost.findByIdAndUpdate(id, blogpost, {
       new: true,
     });
