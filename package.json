@@ -5,8 +5,7 @@
   "main": "index.js",
   "type": "module",
   "jest": {
-    "transform": {},
-    "silent": true
+    "transform": {}
   },
   "scripts": {
     "test": "node --experimental-vm-modules  node_modules/jest/bin/jest.js ",

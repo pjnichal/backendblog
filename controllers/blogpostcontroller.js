@@ -11,7 +11,7 @@ import {
 export const getAllBlogPost = async (req, res) => {
   await getAllBlogPostsService()
     .then((result) => {
-      return res.status(201).json(result);
+      return res.status(200).json(result);
     })
     .catch((error) => {
       return res.status(404).json(error);
@@ -20,7 +20,7 @@ export const getAllBlogPost = async (req, res) => {
 export const getPopularBlogPost = async (req, res) => {
   await getMostPopular()
     .then((result) => {
-      return res.status(201).json(result);
+      return res.status(200).json(result);
     })
     .catch((error) => {
       return res.status(404).json(error);
@@ -29,7 +29,7 @@ export const getPopularBlogPost = async (req, res) => {
 export const findByText = async (req, res) => {
   await getByText(req.body.text)
     .then((result) => {
-      return res.status(201).json(result);
+      return res.status(200).json(result);
     })
     .catch((error) => {
       return res.status(404).json(error);
@@ -40,7 +40,7 @@ export const getByUser = async (req, res) => {
   console.log(req.user._id);
   await getByUserId(req.user._id)
     .then((result) => {
-      return res.status(201).json(result);
+      return res.status(200).json(result);
     })
     .catch((error) => {
       console.log(error);
@@ -51,7 +51,7 @@ export const getByUser = async (req, res) => {
 export const getBlogPostById = async (req, res) => {
   await getBlogPostByIdService(req.params.id)
     .then((result) => {
-      return res.status(201).json(result);
+      return res.status(200).json(result);
     })
     .catch((error) => {
       return res.status(404).json(error);
@@ -81,7 +81,7 @@ export const updateBlogPost = async (req, res) => {
       return res.status(201).json(result);
     })
     .catch((error) => {
-      return res.status(404).json(error);
+      return res.status(401).json(error);
     });
 };
 //delete blog post

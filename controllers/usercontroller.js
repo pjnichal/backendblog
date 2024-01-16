@@ -12,7 +12,7 @@ export const registerUser = async (req, res) => {
 export const loginandauth = async (req, res) => {
   await login(req.body)
     .then((token) => {
-      return res.status(201).json(token);
+      return res.status(200).json(token);
     })
     .catch((error) => {
       return res.status(403).json(error);
@@ -22,7 +22,7 @@ export const accessToken = async (req, res) => {
   // console.log(req.body);
   await getaccessToken(req.body.refreshToken)
     .then((token) => {
-      return res.status(201).json(token);
+      return res.status(200).json(token);
     })
     .catch((error) => {
       return res.status(403).json(error);

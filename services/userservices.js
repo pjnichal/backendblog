@@ -32,7 +32,7 @@ export const saveUser = (user) => {
       console.log(error);
 
       return reject({
-        status: 500,
+        status: 403,
         code: "UAF",
         message: "Validation failed",
         validation: error.errors,

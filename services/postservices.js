@@ -222,7 +222,7 @@ export const saveBlogPostService = (blogPost) => {
       }
 
       return reject({
-        status: 500,
+        status: 403,
         code: "POSTSF",
         message: "Post not saved",
         validation: error.errors,
@@ -236,10 +236,12 @@ export const updateBlogPostService = (id, blogpost, userId) => {
 
   console.log(blogpost);
   return new Promise(async (resolve, reject) => {
+    console.log(userId);
+    console.log(blogpost.user);
     if (blogpost.user != userId) {
       return reject({
         status: 401,
-        code: "POSTUF",
+        code: "UAU",
         message: "Post Update failed",
       });
     }
