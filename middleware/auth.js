@@ -3,8 +3,10 @@ export const auth = (req, res, next) => {
   const authHeader = req.headers.authorization;
   if (authHeader) {
     const token = authHeader.split(" ")[1];
+    console.log(token);
     jwt.verify(token, "RESTFULAPIs", (err, user) => {
       if (err) {
+        console.log(err);
         return res.status(403).send({
           status: 403,
           code: "ATE",

@@ -11,7 +11,7 @@ const port = 4000;
 
 mongoose
   .connect(
-    "mongodb+srv://romrom:itiswhatitis@blogapp.nl23uxd.mongodb.net/?retryWrites=true&w=majority"
+    "mongodb+srv://romrom:itiswhatitis@blogapp.nl23uxd.mongodb.net/blogapp?retryWrites=true&w=majority"
   )
   .then(() => console.log("Connected to Mongo DB Successfully."))
   .catch((err) => console.log("Failed to connect with Mongo DB:", err));
