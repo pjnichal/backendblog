@@ -91,7 +91,7 @@ export const getBlogPostByIdService = async (id) => {
   return new Promise(async (resolve, reject) => {
     try {
       const blogPost = await BlogPost.findOne({ _id: id });
-      // await client.del(`popular:${id}`);
+
       if (blogPost != null) {
         try {
           let popular = await client.get(`popular:${id}`);
@@ -196,7 +196,7 @@ export const deleteBlogPostService = (id) => {
       return reject({
         status: 404,
         code: "POSTDF",
-        message: "Post delete fauled",
+        message: "Post delete failed",
       });
     }
   });
@@ -250,6 +250,7 @@ export const updateBlogPostService = (id, blogpost, userId) => {
     });
 
     if (updatedItem) {
+      await client.del(`popular:${id}`);
       return resolve({
         status: 200,
         code: "POSTUS",
