@@ -1,6 +1,7 @@
 import { User } from "../models/user.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
+
 export const saveUser = (user) => {
   return new Promise(async (resolve, reject) => {
     const { email, password, name } = user;
@@ -41,19 +42,32 @@ export const saveUser = (user) => {
   });
 };
 
-// export const updateUser = (id, user) => {
-//   return new Promise(async (resolve, reject) => {
-//     const updatedItem = await User.findByIdAndUpdate(id, user, {
-//       new: true,
-//     });
-
-//     if (updatedItem) {
-//       return resolve(updatedItem);
-//     } else {
-//       return reject();
-//     }
-//   });
-// };
+export const deleteUserService = (id) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const deleteduser = await User.deleteOne({ _id: id });
+      if (deleteduser.deletedCount > 0) {
+        return resolve({
+          status: 201,
+          code: "USERDS",
+          message: "User deleted successfully",
+        });
+      }
+      return reject({
+        status: 404,
+        code: "USERDF",
+        message: "User not found",
+      });
+    } catch (error) {
+      console.log(error);
+      return reject({
+        status: 404,
+        code: "USERDF",
+        message: "user delete failed",
+      });
+    }
+  });
+};
 export const login = (cred) => {
   return new Promise(async (resolve, reject) => {
     const { email, password } = cred;

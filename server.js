@@ -10,9 +10,7 @@ app.use(express.json());
 const port = 4000;
 
 mongoose
-  .connect(
-    "mongodb+srv://romrom:itiswhatitis@blogapp.nl23uxd.mongodb.net/blogapp?retryWrites=true&w=majority"
-  )
+  .connect("mongodb://localhost:27017/blogapp")
   .then(() => console.log("Connected to Mongo DB Successfully."))
   .catch((err) => console.log("Failed to connect with Mongo DB:", err));
 
