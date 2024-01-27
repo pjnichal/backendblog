@@ -12,7 +12,7 @@ const port = 4000;
 mongoose
   .connect("mongodb://localhost:27017/blogapp")
   .then(() => console.log("Connected to Mongo DB Successfully."))
-  .catch((err) => console.log("Failed to connect with Mongo DB:", err));
+  .catch((err) => console.log("Failed to conne8ct with Mongo DB:", err));
 
 app.use("/blogposts", postRouter);
 app.use("/auth", authRouter);
