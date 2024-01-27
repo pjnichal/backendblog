@@ -86,7 +86,7 @@ export const updateBlogPost = async (req, res) => {
 };
 //delete blog post
 export const deleteBlogPost = async (req, res) => {
-  await deleteBlogPostService(req.params.id)
+  await deleteBlogPostService(req.params.id, req.user._id)
     .then((result) => {
       return res.status(201).json(result);
     })

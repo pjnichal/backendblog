@@ -44,6 +44,7 @@ export const getMostPopular = () => {
   return new Promise(async (resolve, reject) => {
     try {
       const keys = await client.keys("*");
+      console.log(keys);
       let popularList = [];
       if (keys.length == 0) {
         return reject({
@@ -174,18 +175,24 @@ export const getByText = async (text) => {
     }
   });
 };
-export const deleteBlogPostService = (id) => {
+export const deleteBlogPostService = (id,user) => {
   return new Promise(async (resolve, reject) => {
     try {
-      const allblogPosts = await BlogPost.deleteOne({ _id: id });
-      if (allblogPosts.deletedCount > 0) {
-        await client.del(`popular:${id}`);
-        return resolve({
-          status: 201,
-          code: "POSTDS",
-          message: "Post deleted successfully",
-        });
+      const check = await BlogPost.findById({ _id: id });
+      console.log(check);
+      if (check != null && check.user ==user) {
+        const allblogPosts = await BlogPost.deleteOne({ _id: id });
+        console.log(allblogPosts);
+        if (allblogPosts.deletedCount > 0) {
+          await client.del(`popular:${id}`);
+          return resolve({
+            status: 201,
+            code: "POSTDS",
+            message: "Post deleted successfully",
+          });
+        }
       }
+
       return reject({
         status: 404,
         code: "POSTDF",
